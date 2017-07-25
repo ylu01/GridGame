@@ -68,9 +68,7 @@ function setBoard(sch){
     for(var count1 = 1; count1 < 11; count1++){
       gridId = count + "-" + count1;
       addToGrid(count-1,count1-1,gridId);//lllll
-     
-   
-  }
+    }
   }
   var inventoryText;
   inventoryText = document.createElement("div");
@@ -80,15 +78,13 @@ function setBoard(sch){
   document.getElementById("inventoryText").innerHTML = "I N V E N T O R Y";
   
   //make the inventory grid
-  
   setInventory();
   
   
 }
 //takes the current x-y array attributes from the array, and a string gridid. 
 //each x-y coordinate should refer to one char, as to make the grid based on what char is it. 
-//hold on, is id even needed?
-//;;;
+
 function addToGrid(x,y,id){
   var curId  = x + "-" + y;
   if(newArr[x][y] === "W"){
@@ -101,7 +97,7 @@ function addToGrid(x,y,id){
     newGrid.appendChild(newImg);
     board.appendChild(newGrid); 
   }
-  
+  //if Square is a Path
   else if(newArr[x][y]==="P"){
     var newGrid= document.createElement("div");
     newGrid.setAttribute("class", "grid");
@@ -109,6 +105,7 @@ function addToGrid(x,y,id){
     newGrid.style.backgroundColor = "gray";
     board.appendChild(newGrid);
   }
+  //If square is a Starting square
   else if(newArr[x][y] === "S"){
     var newGrid= document.createElement("div");
     begX = x;
@@ -120,8 +117,8 @@ function addToGrid(x,y,id){
     newGrid.appendChild(newImg);
     board.appendChild(newGrid);
   }
+  //if square is a Chest
   else if(newArr[x][y] === "C"){
-    
     var newGrid= document.createElement("div");
     newGrid.setAttribute("class", "grid");
     newGrid.setAttribute("id", curId);
@@ -131,6 +128,7 @@ function addToGrid(x,y,id){
     board.appendChild(newGrid);
     
   }
+  //If Square is the Exit
   else if(newArr[x][y] === "E"){
     
     var newGrid= document.createElement("div");
@@ -141,6 +139,7 @@ function addToGrid(x,y,id){
     newGrid.appendChild(newImg);
     board.appendChild(newGrid);
   }
+  //If Square is an Opened Chest
   else if(newArr[x][y] === "O"){
     var newGrid= document.createElement("div");
     newGrid.setAttribute("class", "grid");
@@ -150,6 +149,7 @@ function addToGrid(x,y,id){
     newGrid.appendChild(newImg);
     board.appendChild(newGrid);
   }
+  //If Square is an Opened Chest
   else if(newArr[x][y] === "K"){
     var newGrid= document.createElement("div");
     newGrid.setAttribute("class", "grid");
@@ -162,7 +162,7 @@ function addToGrid(x,y,id){
   //document.getElementById(curId).innerHTML = curId;
   
 }
-setBoard(newArr);//lert(inventoryList.length); 
+setBoard(newArr);
 
 var characterPic = 'img/char1.jpg';
 //document.onkeydown = checkKey;
@@ -206,8 +206,6 @@ function checkKey(e) {
           begX--;
        }
        else if(newArr[begX-1][begY] === "C"){
-           
-           
            if(curKeys > 0){
                var newLocation1 = (begX-1) + "-" + (begY);
                var replaceChestPic = "#" + newLocation1 + " > img";
@@ -215,7 +213,7 @@ function checkKey(e) {
                var newImg = document.createElement("img");
                newImg.src ="img/openChest.jpg";
                remaining--;
-                    document.getElementById(newLocation1).appendChild(newImg);
+               document.getElementById(newLocation1).appendChild(newImg);
                update(messages[0]);
                curKeys--;
                takeKey();
@@ -369,19 +367,17 @@ function checkKey(e) {
 
     else if (e.keyCode === 39) {
        // right arrow
-      //"X: " + begX + " y: " + begY;
       //begxy is 5-1
      
       document.getElementById("test").innerHTML = "right";
       var tempText = begX + "-" + begY;
-     if(begY+1 < 11){
+      if(begY+1 < 11){
        if(newArr[begX][begY+1] === "P" || newArr[begX][begY+1] === "K"){
           var removeText = "#" + tempText + " > img";
           $(removeText).remove(); 
           var newLocation = begX + "-" + (begY+1);
           var newImg = document.createElement("img");
           newImg.src = characterPic;
-          
           if(newArr[begX][begY+1] === "K"){
             document.getElementById("test").innerHTML = "Key";
             var removeKeyText = "#" + newLocation + " > img";
@@ -397,10 +393,10 @@ function checkKey(e) {
          document.getElementById(newLocation).appendChild(newImg);
        }
     
-      begY++;
+       begY++;
        }
        
-       else if(newArr[begX][begY+1] === "C"){
+     else if(newArr[begX][begY+1] === "C"){
            
          if(curKeys > 0){
                var newLocation1 = (begX) + "-" + (begY+1);
@@ -410,7 +406,7 @@ function checkKey(e) {
                newImg.src ="img/openChest.jpg";
                remaining--;
                
-                    document.getElementById(newLocation1).appendChild(newImg);
+               document.getElementById(newLocation1).appendChild(newImg);
                update(messages[0]);
                curKeys--;
                takeKey();
@@ -503,16 +499,6 @@ document.getElementById(tempLoc).appendChild(newImg);
     break;
   }
 }
-  
-  function setKeyImage(){
-    
-  }
-  
-  //to be implemented in future updates. 
-  function setDynamiteImage(){
-    
-  }
-  
 //loc is a number on index 0-8
   function clearImage(loc){
     var newImg = document.createElement("img");
