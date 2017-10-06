@@ -503,7 +503,7 @@ function setInventory(){
     document.getElementById("g1").innerHTML = "  x0"; //have 0 to begin with. 
     //add second element, dynamite. 
     var newImg1 = document.createElement("img");
-    newImg.src =  'img/tnt.png';
+    newImg1.src =  'img/tnt.png';
     innerGrid.appendChild(newImg1);
     var content1 = document.createElement("p");
     content1.setAttribute("id", "g2");
