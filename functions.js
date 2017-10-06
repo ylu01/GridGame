@@ -493,13 +493,22 @@ function setInventory(){
     innerGrid.setAttribute("class", "gridPic");
         //innerGrid.setAttribute("id", "g"+count1);
     inventoryGrid.appendChild(innerGrid);
+    //add in first element, keys
     var newImg = document.createElement("img");
-    newImg.src =  'img/key.jpg';
+    newImg.src =  'img/key_Inv.jpg';
     innerGrid.appendChild(newImg);
     var content = document.createElement("p");
     content.setAttribute("id", "g1");
     inventoryGrid.appendChild(content);
     document.getElementById("g1").innerHTML = "  x0"; //have 0 to begin with. 
+    //add second element, dynamite. 
+    var newImg1 = document.createElement("img");
+    newImg.src =  'img/tnt.png';
+    innerGrid.appendChild(newImg1);
+    var content1 = document.createElement("p");
+    content1.setAttribute("id", "g2");
+    inventoryGrid.appendChild(content1);
+    document.getElementById("g2").innerHTML = "  x0"; //have 0 to begin with. 
 
 }
 function setInventoryObj(num){
