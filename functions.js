@@ -508,7 +508,7 @@ function setInventory(){
     var content1 = document.createElement("p");
     content1.setAttribute("id", "g2");
     inventoryGrid.appendChild(content1);
-    document.getElementById("g2").innerHTML = "  x0"; //have 0 to begin with. 
+    document.getElementById("g2").innerHTML = "  x?????"; //have 0 to begin with. 
 
 }
 function setInventoryObj(num){
