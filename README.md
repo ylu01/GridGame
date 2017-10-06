@@ -11,6 +11,8 @@ The level is made with a 100 Character string, where:
 - E is the exit. 
 - W is a wall.
 - P is a path. 
+- T is a TNT block. 
+- t is a torch, used to light the TNT. 
 
 the Number of C's must equal the number of K's. E is only accessible once all the chests are opened. A C will become an O once accessed. 
 
