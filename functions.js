@@ -489,26 +489,38 @@ function setInventory(){
     inventoryGrid.setAttribute("id", "i1");
     inventoryGrid.setAttribute("class", "iGrid");
     inventory.appendChild(inventoryGrid);
+	
+    var inventoryGrid1 = document.createElement("div");
+    inventoryGrid1.setAttribute("id", "i2");
+    inventoryGrid1.setAttributes("class", "iGrid");
+    inventory.appendChild(inventoryGrid1);
+	
     var innerGrid = document.createElement("div");
     innerGrid.setAttribute("class", "gridPic");
         //innerGrid.setAttribute("id", "g"+count1);
     inventoryGrid.appendChild(innerGrid);
+	
+    var innerGrid1 = document.createElement("div");
+    innerGrid1.setAttribute("class", "gridPic");
+    inventoryGrid1.appendChild(innerGrid1);
+	
     //add in first element, keys
     var newImg = document.createElement("img");
-    newImg.src =  'img/key_Inv.jpg';
+    newImg.src =  'img/key_Inv.png';
     innerGrid.appendChild(newImg);
     var content = document.createElement("p");
     content.setAttribute("id", "g1");
     inventoryGrid.appendChild(content);
     document.getElementById("g1").innerHTML = "  x0"; //have 0 to begin with. 
+	
     //add second element, dynamite. 
     var newImg1 = document.createElement("img");
     newImg1.src =  'img/tnt.png';
-    innerGrid.appendChild(newImg1);
+    innerGrid1.appendChild(newImg1);
     var content1 = document.createElement("p");
     content1.setAttribute("id", "g2");
-    inventoryGrid.appendChild(content1);
-    document.getElementById("g2").innerHTML = "  x?????"; //have 0 to begin with. 
+    inventoryGrid1.appendChild(content1);
+    document.getElementById("g2").innerHTML = "  x0"; //have 0 to begin with. 
 
 }
 function setInventoryObj(num){
