@@ -492,7 +492,7 @@ function setInventory(){
 	
     var inventoryGrid1 = document.createElement("div");
     inventoryGrid1.setAttribute("id", "i2");
-    inventoryGrid1.setAttributes("class", "iGrid");
+    inventoryGrid1.setAttribute("class", "iGrid");
     inventory.appendChild(inventoryGrid1);
 	
     var innerGrid = document.createElement("div");
