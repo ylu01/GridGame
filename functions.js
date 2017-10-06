@@ -6,13 +6,17 @@
 
 
 //each level will be a string of 100 characters, in an array. 
-var level = "WWWWWWWWWWWPPPPPPPCWWWPPEPPPWWOPKPPCPPWWPSPKPPPCCCPPPPPPWWWPPCPWWWWWPPPKPPPKPPPPPWWPWPPWWPWWWWWWWWW";
+var level = "WWWWWWWWWWWKPWPPPPCWWWPWEPWWWWCWKWPPWCWPPSPKPPWPWCPWWWPPPPWPPCPWWWWWWPPKPPPKPPPPCWWPWWWWWWWOPPPPPPKW";
 //the list of system messages to display
+//test level
+//WWWWWWWWWWWPPPPPPPPWWSPPPPPPPWWPPPPPPPPWWWWKKPPPPWWPPPPPPPPWWPPPPPPPPWWCCPPPPPPWWPPPEPPPPWWWWWWWWWWW
+//OOWWWWWWWWWPPPPPPPCWWWPPEPPPWWOPKPPCPPWWPSPKPPPCCCPPPPPPWWWPPCPWWWWWPPPKPPPKPPPPPWWPWPPWWPWWWWWWWWW
 var messages = ["Opened a chest, got some treasure. ", 
                 "The chest is locked.", 
                 "You found a key. ", 
                 "The chest is empty. ",
-                "You have not found all treasure yet. "];
+                "You have not found all treasure yet.",
+                "You haven't collected all the treasure yet."];
 
 
 //attributes/flags here. 
@@ -68,7 +72,9 @@ function setBoard(sch){
     for(var count1 = 1; count1 < 11; count1++){
       gridId = count + "-" + count1;
       addToGrid(count-1,count1-1,gridId);//lllll
-    }
+     
+   
+  }
   }
   var inventoryText;
   inventoryText = document.createElement("div");
@@ -78,13 +84,15 @@ function setBoard(sch){
   document.getElementById("inventoryText").innerHTML = "I N V E N T O R Y";
   
   //make the inventory grid
+  
   setInventory();
   
   
 }
 //takes the current x-y array attributes from the array, and a string gridid. 
 //each x-y coordinate should refer to one char, as to make the grid based on what char is it. 
-
+//hold on, is id even needed?
+//;;;
 function addToGrid(x,y,id){
   var curId  = x + "-" + y;
   if(newArr[x][y] === "W"){
@@ -97,7 +105,7 @@ function addToGrid(x,y,id){
     newGrid.appendChild(newImg);
     board.appendChild(newGrid); 
   }
-  //if Square is a Path
+  
   else if(newArr[x][y]==="P"){
     var newGrid= document.createElement("div");
     newGrid.setAttribute("class", "grid");
@@ -105,7 +113,6 @@ function addToGrid(x,y,id){
     newGrid.style.backgroundColor = "gray";
     board.appendChild(newGrid);
   }
-  //If square is a Starting square
   else if(newArr[x][y] === "S"){
     var newGrid= document.createElement("div");
     begX = x;
@@ -117,8 +124,8 @@ function addToGrid(x,y,id){
     newGrid.appendChild(newImg);
     board.appendChild(newGrid);
   }
-  //if square is a Chest
   else if(newArr[x][y] === "C"){
+    
     var newGrid= document.createElement("div");
     newGrid.setAttribute("class", "grid");
     newGrid.setAttribute("id", curId);
@@ -128,7 +135,6 @@ function addToGrid(x,y,id){
     board.appendChild(newGrid);
     
   }
-  //If Square is the Exit
   else if(newArr[x][y] === "E"){
     
     var newGrid= document.createElement("div");
@@ -139,7 +145,6 @@ function addToGrid(x,y,id){
     newGrid.appendChild(newImg);
     board.appendChild(newGrid);
   }
-  //If Square is an Opened Chest
   else if(newArr[x][y] === "O"){
     var newGrid= document.createElement("div");
     newGrid.setAttribute("class", "grid");
@@ -149,7 +154,6 @@ function addToGrid(x,y,id){
     newGrid.appendChild(newImg);
     board.appendChild(newGrid);
   }
-  //If Square is an Opened Chest
   else if(newArr[x][y] === "K"){
     var newGrid= document.createElement("div");
     newGrid.setAttribute("class", "grid");
@@ -162,7 +166,9 @@ function addToGrid(x,y,id){
   //document.getElementById(curId).innerHTML = curId;
   
 }
-setBoard(newArr);
+//alert(level);
+checkLevel(newArr);
+setBoard(newArr);//lert(inventoryList.length); 
 
 var characterPic = 'img/char1.jpg';
 //document.onkeydown = checkKey;
@@ -173,24 +179,70 @@ var characterPic = 'img/char1.jpg';
 //here handles the key pressed stuff. 
 document.onkeydown = checkKey;
 
+//function to validate the level string. 
+function checkLevel(levelStr){
+var nKeys =0;
+var nChests =0;
+var nExit = 0;
+var nStart = 0;
+for(var countK = 0; countK < levelStr.length; countK++){
+    for(var countK1 = 0; countK1 < levelStr[countK].length; countK1++){
+        if(levelStr[countK][countK1] === "K"){
+            nKeys++;
+        }
+    }
+} 
+for(var countC = 0; countC < levelStr.length; countC++){
+    for(var countC1 = 0; countC1 < levelStr[countC].length; countC1++){
+        if(levelStr[countC][countC1] === "C"){
+            nChests++;
+        }
+        if(levelStr[countC][countC1] === "S"){
+            nStart++;
+        }
+        if(levelStr[countC][countC1] === "E"){
+            nExit++;
+        }
+    }
+}
+    
+
+
+    //alert("Number of keys in level: " + nKeys + " Number of chests: " + nChests);
+    if(nKeys !== nChests){
+        //alert("Unequal number of keys and chests");
+    }
+    if(nStart !== 1){
+        //alert("incorrect number of starting points.");
+    }
+    if(nExit !== 1){
+        alert("Incorrect number of Exits");
+    }
+}
+
 function checkKey(e) {
 
     e = e || window.event;
     if (e.keyCode === 38) {
         // up arrow
       //x-1
-      document.getElementById("test").innerHTML = "up";
+      
+          //alert(newArr[begX-1][begY]);
+      //document.getElementById("test").innerHTML = "up";
       var temp;
       var tempText = begX + "-" + begY;
        //console.log("The Problem:" +(begX-2) + " " + begY + ", "+ newArr[begX-2][begY-1] + tempText);
      if(begX-1 >= 0){
+         
+          if(newArr[begX-1][begY] === "O"){
+            update(messages[3]);
+          }
        if(newArr[begX-1][begY] === "P" || newArr[begX-1][begY] === "K"){
           var removeText = "#" + tempText + " > img";
           $(removeText).remove(); 
           var newLocation = (begX-1) + "-" + begY;
           var newImg = document.createElement("img");
           newImg.src = characterPic;
-          
          if(newArr[begX-1][begY] === "K"){
           var removeKeyText = "#" + newLocation + " > img";
           $(removeKeyText).remove(); 
@@ -206,6 +258,8 @@ function checkKey(e) {
           begX--;
        }
        else if(newArr[begX-1][begY] === "C"){
+           
+           
            if(curKeys > 0){
                var newLocation1 = (begX-1) + "-" + (begY);
                var replaceChestPic = "#" + newLocation1 + " > img";
@@ -213,7 +267,7 @@ function checkKey(e) {
                var newImg = document.createElement("img");
                newImg.src ="img/openChest.jpg";
                remaining--;
-               document.getElementById(newLocation1).appendChild(newImg);
+                    document.getElementById(newLocation1).appendChild(newImg);
                update(messages[0]);
                curKeys--;
                takeKey();
@@ -238,7 +292,7 @@ function checkKey(e) {
     else if (e.keyCode === 40) {
         // down arrow
       
-      document.getElementById("test").innerHTML = "Down";
+      //ocument.getElementById("test").innerHTML = "Down";
       var temp;
       var tempText = begX + "-" + begY;
        //console.log("The Problem:" +(begX-2) + " " + begY + ", "+ newArr[begX-2][begY-1] + tempText);
@@ -302,7 +356,7 @@ function checkKey(e) {
        // left arrow
       //y-1
      //alert("x: " + begX + " Y: " + begY + " char: " + newArr[begX-1][begY-2]);
-     document.getElementById("test").innerHTML = "left";
+     //document.getElementById("test").innerHTML = "left";
       var tempText = begX + "-" + begY;
       //var test = (begX) + "-" + (begY-2)+ "  " + newArr[begX][begY-1];
       
@@ -367,19 +421,21 @@ function checkKey(e) {
 
     else if (e.keyCode === 39) {
        // right arrow
+      //"X: " + begX + " y: " + begY;
       //begxy is 5-1
      
-      document.getElementById("test").innerHTML = "right";
+      //document.getElementById("test").innerHTML = "right";
       var tempText = begX + "-" + begY;
-      if(begY+1 < 11){
+     if(begY+1 < 11){
        if(newArr[begX][begY+1] === "P" || newArr[begX][begY+1] === "K"){
           var removeText = "#" + tempText + " > img";
           $(removeText).remove(); 
           var newLocation = begX + "-" + (begY+1);
           var newImg = document.createElement("img");
           newImg.src = characterPic;
+          
           if(newArr[begX][begY+1] === "K"){
-            document.getElementById("test").innerHTML = "Key";
+            //document.getElementById("test").innerHTML = "Key";
             var removeKeyText = "#" + newLocation + " > img";
             $(removeKeyText).remove(); 
             document.getElementById(newLocation).appendChild(newImg);
@@ -393,10 +449,10 @@ function checkKey(e) {
          document.getElementById(newLocation).appendChild(newImg);
        }
     
-       begY++;
+      begY++;
        }
        
-     else if(newArr[begX][begY+1] === "C"){
+       else if(newArr[begX][begY+1] === "C"){
            
          if(curKeys > 0){
                var newLocation1 = (begX) + "-" + (begY+1);
@@ -406,7 +462,7 @@ function checkKey(e) {
                newImg.src ="img/openChest.jpg";
                remaining--;
                
-               document.getElementById(newLocation1).appendChild(newImg);
+                    document.getElementById(newLocation1).appendChild(newImg);
                update(messages[0]);
                curKeys--;
                takeKey();
@@ -499,6 +555,16 @@ document.getElementById(tempLoc).appendChild(newImg);
     break;
   }
 }
+  
+  function setKeyImage(){
+    
+  }
+  
+  //to be implemented in future updates. 
+  function setDynamiteImage(){
+    
+  }
+  
 //loc is a number on index 0-8
   function clearImage(loc){
     var newImg = document.createElement("img");
