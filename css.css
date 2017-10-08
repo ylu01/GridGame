@@ -97,8 +97,7 @@ img{
 
 .iGrid{
         position: relative;
-        
-        width:150px;
+        width:100px;
         height:50px;
   top:10px;
   left:3%;
@@ -114,12 +113,13 @@ img{
   font-family:Comic Sans MS;
   
 }
-#g1{
+#g1, #g2{
     font-family: "Arial", cursive, sans-serif;
     font-size:150%;
+    left:-25px;
 }
 .gridPic{
-    width:60px;
+    width:50px;
     height:50px;
     float:left;
 }
