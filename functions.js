@@ -6,17 +6,19 @@
 
 
 //each level will be a string of 100 characters, in an array. 
-var level = "WWWWWWWWWWWKPWPPPPCWWWPWEPWWWWCWKWPPWCWPPSPKPPWPWCPWWWPPPPWPPCPWWWWWWPPKPPPKPPPPCWWPWWWWWWWOPPPPPPKW";
+var level = "WWWWWWWWWWWKPWPPtPCWWWPWEPWWTWCWKWPPWCWCPSPKttTPWPPWWWPPPPWPPCPWWWWWWPPKPPPKPPPPCWWPWWWWWWWOPPPPPPKW";
 //the list of system messages to display
 //test level
 //WWWWWWWWWWWPPPPPPPPWWSPPPPPPPWWPPPPPPPPWWWWKKPPPPWWPPPPPPPPWWPPPPPPPPWWCCPPPPPPWWPPPEPPPPWWWWWWWWWWW
 //OOWWWWWWWWWPPPPPPPCWWWPPEPPPWWOPKPPCPPWWPSPKPPPCCCPPPPPPWWWPPCPWWWWWPPPKPPPKPPPPPWWPWPPWWPWWWWWWWWW
-var messages = ["Opened a chest, got some treasure. ", 
-                "The chest is locked.", 
-                "You found a key. ", 
-                "The chest is empty. ",
-                "You have not found all treasure yet.",
-                "You haven't collected all the treasure yet."];
+var messages = ["Opened a chest, got some treasure. ",  //0
+                "The chest is locked.",  //1
+                "You found a key. ", //2
+                "The chest is empty. ", //3
+                "You have not found all treasure yet.",//4
+                "You haven't collected all the treasure yet.",//5
+                "You did not collect all the treasure yet.", //6
+                "You found a torch."]; //7
 
 
 //attributes/flags here. 
@@ -27,6 +29,7 @@ var inventory; // your inventory
 var begX, begY;//coordinates for start location
 var numKeys;//how many keys are there in total. 
 var curKeys;// how many keys you currently have. 
+var curTorches;//how many torches you currently have
 var chestsOpen; // chests open should equal num keys, right now, given there should be an equal number of chests vs keys. 
 var invCount; // iterator variable for the inventory. 
 var inventoryList = [];
@@ -51,6 +54,7 @@ remaining = numKeys; //current keys should = total Keys at the beginning. //"get
 //make the board
 function setBoard(sch){
         curKeys = 0;
+        curTorches = 0;
         panel = document.createElement("div");
 	board = document.createElement("div");
 	newsBox = document.createElement("div");
@@ -163,6 +167,26 @@ function addToGrid(x,y,id){
     newGrid.appendChild(newImg);
     board.appendChild(newGrid);
   }
+  
+  else if(newArr[x][y] === "T"){
+    var newGrid= document.createElement("div");
+    newGrid.setAttribute("class", "grid");
+    newGrid.setAttribute("id", curId);
+    var newImg = document.createElement("img");
+    newImg.src =  'img/tnt.png';
+    newGrid.appendChild(newImg);
+    board.appendChild(newGrid);
+  }
+  
+  else if(newArr[x][y] === "t"){
+    var newGrid= document.createElement("div");
+    newGrid.setAttribute("class", "grid");
+    newGrid.setAttribute("id", curId);
+    var newImg = document.createElement("img");
+    newImg.src =  'img/torch.png';
+    newGrid.appendChild(newImg);
+    board.appendChild(newGrid);
+  }
   //document.getElementById(curId).innerHTML = curId;
   
 }
@@ -220,6 +244,8 @@ for(var countC = 0; countC < levelStr.length; countC++){
     }
 }
 
+
+///////////////////UP
 function checkKey(e) {
 
     e = e || window.event;
@@ -229,7 +255,6 @@ function checkKey(e) {
       
           //alert(newArr[begX-1][begY]);
       //document.getElementById("test").innerHTML = "up";
-      var temp;
       var tempText = begX + "-" + begY;
        //console.log("The Problem:" +(begX-2) + " " + begY + ", "+ newArr[begX-2][begY-1] + tempText);
      if(begX-1 >= 0){
@@ -237,7 +262,7 @@ function checkKey(e) {
           if(newArr[begX-1][begY] === "O"){
             update(messages[3]);
           }
-       if(newArr[begX-1][begY] === "P" || newArr[begX-1][begY] === "K"){
+       if(newArr[begX-1][begY] === "P" || newArr[begX-1][begY] === "K" || newArr[begX-1][begY] === "S"){
           var removeText = "#" + tempText + " > img";
           $(removeText).remove(); 
           var newLocation = (begX-1) + "-" + begY;
@@ -251,6 +276,15 @@ function checkKey(e) {
           document.getElementById(newLocation).appendChild(newImg);
           addKey();
           curKeys++;//updateInventory
+          }
+          else if(newArr[begX-1][begY] === "t"){
+          var removeKeyText = "#" + newLocation + " > img";
+          $(removeKeyText).remove(); 
+          update(messages[7]);
+          newArr[begX-1][begY] ="P";
+          document.getElementById(newLocation).appendChild(newImg);
+          addTorch();
+          curTorches++; //update torches
           }
           else{
              document.getElementById(newLocation).appendChild(newImg);
@@ -293,11 +327,10 @@ function checkKey(e) {
         // down arrow
       
       //ocument.getElementById("test").innerHTML = "Down";
-      var temp;
       var tempText = begX + "-" + begY;
        //console.log("The Problem:" +(begX-2) + " " + begY + ", "+ newArr[begX-2][begY-1] + tempText);
      if(begX < 11){
-       if(newArr[begX+1][begY] === "P" || newArr[begX+1][begY] === "K"){
+       if(newArr[begX+1][begY] === "P" || newArr[begX+1][begY] === "K" || newArr[begX+1][begY] === "S" || newArr[begX+1][begY] === "t"){
          
           var removeText = "#" + tempText + " > img";
           $(removeText).remove(); 
@@ -306,13 +339,22 @@ function checkKey(e) {
           newImg.src = characterPic;
           
           if(newArr[begX+1][begY] === "K"){
-          var removeKeyText = "#" + newLocation + " > img";
-          $(removeKeyText).remove(); 
-          update(messages[2]);
-          newArr[begX+1][begY] ="P";
-          document.getElementById(newLocation).appendChild(newImg);
-          curKeys++;//updateInventory
-          addKey();
+            var removeKeyText = "#" + newLocation + " > img";
+            $(removeKeyText).remove(); 
+            update(messages[2]);
+            newArr[begX+1][begY] ="P";
+            document.getElementById(newLocation).appendChild(newImg);
+            curKeys++;//updateInventory
+            addKey();
+          }
+          else if(newArr[begX+1][begY] === "t"){
+            var removeKeyText = "#" + newLocation + " > img";
+            $(removeKeyText).remove(); 
+            update(messages[7]);
+            newArr[begX+1][begY] ="P";
+            document.getElementById(newLocation).appendChild(newImg);
+            curTorches++;//updateInventory
+            addTorch();
           }
           else{
              document.getElementById(newLocation).appendChild(newImg);
@@ -361,7 +403,7 @@ function checkKey(e) {
       //var test = (begX) + "-" + (begY-2)+ "  " + newArr[begX][begY-1];
       
      if(begY > 0){
-       if(newArr[begX][begY-1] === "P" || newArr[begX][begY-1] === "K"){
+       if(newArr[begX][begY-1] === "P" || newArr[begX][begY-1] === "K" || newArr[begX][begY-1] === "S" || newArr[begX][begY-1] === "t"){
          
           console.log(tempText);
           //alert(tempText);
@@ -381,11 +423,26 @@ function checkKey(e) {
          addKey();
          newArr[begX][begY-1] = "P";
        }
+       else if(newArr[begX][begY-1] === "t"){
+         //document.getElementById("test").innerHTML = "Key";
+             var removeKeyText = "#" + newLocation + " > img";
+             $(removeKeyText).remove();                                                          
+             document.getElementById(newLocation).appendChild(newImg);
+         update(messages[7]);//you found a key. 
+         curTorches++;
+         addTorch();
+         newArr[begX][begY-1] = "P";
+       }
+      
        else{
          document.getElementById(newLocation).appendChild(newImg);
        }
     
       begY--;
+       }
+       else if(newArr[begX][begY-1] === "T"){
+           alert("explode left");
+           explode();
        }
        else if(newArr[begX][begY-1] === "C"){
            if(curKeys > 0){
@@ -427,7 +484,7 @@ function checkKey(e) {
       //document.getElementById("test").innerHTML = "right";
       var tempText = begX + "-" + begY;
      if(begY+1 < 11){
-       if(newArr[begX][begY+1] === "P" || newArr[begX][begY+1] === "K"){
+       if(newArr[begX][begY+1] === "P" || newArr[begX][begY+1] === "K" || newArr[begX][begY+1] === "S" || newArr[begX][begY+1] === "t"){
           var removeText = "#" + tempText + " > img";
           $(removeText).remove(); 
           var newLocation = begX + "-" + (begY+1);
@@ -445,11 +502,28 @@ function checkKey(e) {
             curKeys++;
             addKey();
           }
+          else if(newArr[begX][begY+1] === "t"){
+            var removeKeyText = "#" + newLocation + " > img";
+            $(removeKeyText).remove(); 
+            document.getElementById(newLocation).appendChild(newImg);
+            update(messages[7]);
+            //it is now a path, the key is gone.  
+            newArr[begX][begY+1] = "P";
+            curTorches++;
+            addTorch();
+          }
+          else if(newArr[begX][begY+1] === "T"){
+              alert("???");
+          }
        else{
          document.getElementById(newLocation).appendChild(newImg);
        }
     
       begY++;
+       }
+       
+       else if(newArr[begX][begY+1] === "T"){
+           explode();
        }
        
        else if(newArr[begX][begY+1] === "C"){
@@ -482,27 +556,26 @@ function checkKey(e) {
       
     }
 }
-//makes the inventory. For now you can only have at most 9 items at once. 
+
 function setInventory(){
     
-    var inventoryGrid= document.createElement("div");
-    inventoryGrid.setAttribute("id", "i1");
-    inventoryGrid.setAttribute("class", "iGrid");
-    inventory.appendChild(inventoryGrid);
+    var keySlot= document.createElement("div");
+    keySlot.setAttribute("id", "i1");
+    keySlot.setAttribute("class", "iGrid");
+    inventory.appendChild(keySlot);
 	
-    var inventoryGrid1 = document.createElement("div");
-    inventoryGrid1.setAttribute("id", "i2");
-    inventoryGrid1.setAttribute("class", "iGrid");
-    inventory.appendChild(inventoryGrid1);
+    var torchSlot = document.createElement("div");
+    torchSlot.setAttribute("id", "i2");
+    torchSlot.setAttribute("class", "iGrid");
+    inventory.appendChild(torchSlot);
 	
     var innerGrid = document.createElement("div");
     innerGrid.setAttribute("class", "gridPic");
-        //innerGrid.setAttribute("id", "g"+count1);
-    inventoryGrid.appendChild(innerGrid);
+    keySlot.appendChild(innerGrid);
 	
     var innerGrid1 = document.createElement("div");
     innerGrid1.setAttribute("class", "gridPic");
-    inventoryGrid1.appendChild(innerGrid1);
+    torchSlot.appendChild(innerGrid1);
 	
     //add in first element, keys
     var newImg = document.createElement("img");
@@ -510,17 +583,17 @@ function setInventory(){
     innerGrid.appendChild(newImg);
     var content = document.createElement("p");
     content.setAttribute("id", "g1");
-    inventoryGrid.appendChild(content);
-    document.getElementById("g1").innerHTML = "  x0"; //have 0 to begin with. 
+    keySlot.appendChild(content);
+    document.getElementById("g1").innerHTML = "x0"; //have 0 to begin with. 
 	
     //add second element, dynamite. 
     var newImg1 = document.createElement("img");
-    newImg1.src =  'img/tnt.png';
+    newImg1.src =  'img/torch.png';
     innerGrid1.appendChild(newImg1);
     var content1 = document.createElement("p");
     content1.setAttribute("id", "g2");
-    inventoryGrid1.appendChild(content1);
-    document.getElementById("g2").innerHTML = "  x0"; //have 0 to begin with. 
+    torchSlot.appendChild(content1);
+    document.getElementById("g2").innerHTML = "x0"; //have 0 to begin with. 
 
 }
 function setInventoryObj(num){
@@ -540,20 +613,35 @@ function update(text){
 //////////INVENTORY FUNCTIONS/////////////////
 
 function addKey(){
-    var temp = document.getElementById("g1").innerHTML.split("  x");
+    var temp = document.getElementById("g1").innerHTML.split("x");
     temp.shift();
     temp = parseInt(temp);
     temp++;
-    document.getElementById("g1").innerHTML = "  x" + temp;
+    document.getElementById("g1").innerHTML = "x" + temp;
     
 }
 function takeKey(){
-    var temp = document.getElementById("g1").innerHTML.split("  x");
+    var temp = document.getElementById("g1").innerHTML.split("x");
     temp.shift();
     temp = parseInt(temp);
     temp--;
-    document.getElementById("g1").innerHTML = "  x" + temp;
+    document.getElementById("g1").innerHTML = "x" + temp;
     
+}
+function addTorch(){
+    var temp = document.getElementById("g2").innerHTML.split("x");
+    temp.shift();
+    temp = parseInt(temp);
+    temp++;
+    document.getElementById("g2").innerHTML = "x" + temp;
+}
+
+function takeTorch(){
+    var temp = document.getElementById("g2").innerHTML.split("x");
+    temp.shift();
+    temp = parseInt(temp);
+    temp--;
+    document.getElementById("g2").innerHTML = "x" + temp;
 }
 function addItem(itemChar){
   if(invCount > 9){
@@ -592,3 +680,53 @@ document.getElementById(tempLoc).appendChild(newImg);
     newImg.src = characterPic;
     
   }
+  //explode(newArr[begX][begY]);
+function explode(){
+    var boom = document.createElement("img");
+    boom.src = "img/boom.png";
+    var currLoc = newArr[begX][begY];
+    
+    /*    OOO
+     *    OBO 
+     *    O O
+     */
+    if(newArr[begX-1][begY] === "T"){
+        newArr[begX-2][begY].src = "img/boom"; //top center
+        newArr[begX-2][begY-1].src = "img/boom"; //top right
+        newArr[begX-2][begY+1].src = "img/boom";//top left
+        newArr[begX-1][begY-1].src = "img/boom";//mid right
+        newArr[begX-1][begY+1].src = "img/boom"; //mid left
+        newArr[begX][begY-1].src = "img/boom"; //left
+        newArr[begX][begY+1].src = "img/boom"; //right
+        
+    }
+     /*    O O
+     *     OBO 
+     *     OOO
+     */
+    else if(newArr[begX+1][begY] === "T"){
+        //down
+    }
+    
+    /*     OOO
+     *      BO 
+     *     OOO
+     */
+    else if(newArr[begX][begY-1] === "T"){
+        var boomImg = document.createElement("img");
+        newArr[begX][begY-1].src = "img/boom.png"; //top left
+        
+        boomImg.src = "img/boom.png";
+        document.getElementById((begX-1) + "-" + (begY-2)).appendChild(boomImg);
+        newArr[begX-1][begY-1].src = "img/boom.png"; //top middle
+        newArr[begX-1][begY-2].src = "img/boom.png";//top right
+        newArr[begX][begY-2].src = "img/boom.png";//mid right
+        newArr[begX+1][begY].src = "img/boom.png"; //bottom left
+        newArr[begX+1][begY-1].src = "img/boom.png"; //bottom middle
+        newArr[begX+1][begY-2].src = "img/boom.png";  //bottom right
+    }
+    else if(newArr[begX][begY+1] === "T"){
+        //right
+    }
+    
+}
