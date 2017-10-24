@@ -6,7 +6,7 @@
 
 
 //each level will be a string of 100 characters, in an array. 
-var level = "WWWWWWWWWWWKPWPPtPCWWWPWEPWWTWCWKWPPWCWCPSPKttTPWPPWWWPPPPWPPCPWWWWWWPPKPPPKPPPPCWWPWWWWWWWOPPPPPPKW";
+var level = "WWPTWWWWWWWKPWPPtPCWWWPWEPWWTWCWKWPPWCWCPSPKttTPWPPWWWPPPPWPPCPWWWWWWPPKPPPTPPPPCWWPWWWWWWWOPPPPPPKW";
 //the list of system messages to display
 //test level
 //WWWWWWWWWWWPPPPPPPPWWSPPPPPPPWWPPPPPPPPWWWWKKPPPPWWPPPPPPPPWWPPPPPPPPWWCCPPPPPPWWPPPEPPPPWWWWWWWWWWW
@@ -441,7 +441,7 @@ function checkKey(e) {
       begY--;
        }
        else if(newArr[begX][begY-1] === "T"){
-           alert("explode left");
+           //alert("explode left");
            explode();
        }
        else if(newArr[begX][begY-1] === "C"){
@@ -665,14 +665,6 @@ document.getElementById(tempLoc).appendChild(newImg);
   }
 }
   
-  function setKeyImage(){
-    
-  }
-  
-  //to be implemented in future updates. 
-  function setDynamiteImage(){
-    
-  }
   
 //loc is a number on index 0-8
   function clearImage(loc){
@@ -681,23 +673,95 @@ document.getElementById(tempLoc).appendChild(newImg);
     
   }
   //explode(newArr[begX][begY]);
+  
+  //array to store the blocks to blow up. 
+  var toBlowUp = [];
 function explode(){
-    var boom = document.createElement("img");
-    boom.src = "img/boom.png";
-    var currLoc = newArr[begX][begY];
     
-    /*    OOO
-     *    OBO 
-     *    O O
+    
+    
+    //left
+    /*
+     *  O O O
+     *    B O
+     *  O O O
+     * 
      */
-    if(newArr[begX-1][begY] === "T"){
-        newArr[begX-2][begY].src = "img/boom"; //top center
-        newArr[begX-2][begY-1].src = "img/boom"; //top right
-        newArr[begX-2][begY+1].src = "img/boom";//top left
-        newArr[begX-1][begY-1].src = "img/boom";//mid right
-        newArr[begX-1][begY+1].src = "img/boom"; //mid left
-        newArr[begX][begY-1].src = "img/boom"; //left
-        newArr[begX][begY+1].src = "img/boom"; //right
+    alert("begX is: " + (begX-1) + " BegY is: " + begY);
+    if(newArr[begX][begY+1] === "T"){
+        
+       update("BOOM!");
+        if(begX-1 < 9 && begX-1 > 0 && begY< 9 && begY > 0 ){
+            if(newArr[begX-1][begY+2] !== "C" && newArr[begX-1][begY+2] !== "t" && newArr[begX-1][begY+2] !== "K" && newArr[begX-1][begY+2] !== "E"){
+                toBlowUp.push((begX-1 + "-" + (begY+2)));
+            }
+            
+        }
+        if(begX-1 < 9 && begX-1 > 0 && begY< 9 && begY > 0 ){
+            if(newArr[begX-1][begY+1] !== "C" && newArr[begX-1][begY+1] !== "t" && newArr[begX-1][begY+1] !== "K" && newArr[begX-1][begY+1] !== "E"){
+                toBlowUp.push((begX-1 + "-" + (begY+1)));
+            }
+            
+        }
+        if(begX-1 < 9 && begX-1 > 0 && begY< 9 && begY > 0 ){
+            if(newArr[begX-1][begY] !== "C" && newArr[begX-1][begY] !== "t" && newArr[begX-1][begY] !== "K" && newArr[begX-1][begY] !== "E"){
+                toBlowUp.push((begX-1 + "-" + (begY)));
+            }
+            
+        }
+        if(begX < 9 && begX >= 0 && begY+2< 9 && begY+2 > 0 ){
+            if(newArr[begX][begY+2] !== "C" && newArr[begX][begY+2] !== "t" && newArr[begX][begY+2] !== "K" && newArr[begX][begY+2] !== "E"){
+                alert(begX + " " + (begY+2));
+                toBlowUp.push((begX + "-" + (begY+2)));
+            }
+            
+        }
+        
+        if(begX+1 < 9 && begX+1 > 0 && begY+2< 9 && begY+2 > 0 ){
+            if(newArr[begX+1][begY+2] !== "C" && newArr[begX+1][begY+2] !== "t" && newArr[begX+1][begY+2] !== "K" && newArr[begX+1][begY+2] !== "E"){
+                toBlowUp.push((begX+1 + "-" + (begY+2)));
+            }
+            
+        }
+        if(begX+1 < 9 && begX+1 > 0 && begY+1< 9 && begY+1 > 0 ){
+            if(newArr[begX+1][begY+1] !== "C" && newArr[begX+1][begY+1] !== "t" && newArr[begX+1][begY+1] !== "K" && newArr[begX+1][begY+1] !== "E"){
+                
+                toBlowUp.push((begX+1 + "-" + (begY+1)));
+            }
+            
+        }
+        if(begX+1 < 9 && begX+1 > 0 && begY< 9 && begY > 0 ){
+            if(newArr[begX+1][begY] !== "C" && newArr[begX+1][begY] !== "t" && newArr[begX+1][begY] !== "K" && newArr[begX+1][begY] !== "E"){
+                
+                toBlowUp.push((begX+1 + "-" + (begY)));
+            }
+            
+        }
+        if(begX < 9 && begX > 0 && begY+1< 9 && begY+1 > 0 ){
+            if(newArr[begX][begY+1] !== "C" && newArr[begX][begY+1] !== "t" && newArr[begX][begY+1] !== "K" && newArr[begX][begY+1] !== "E"){
+                alert("?");
+                toBlowUp.push((begX + "-" + (begY+1)));
+            }
+            
+        }
+        toBlowUp.push(begX + "-" + (begY+1));
+        alert(toBlowUp);
+
+    blowUp(toBlowUp);
+
+
+
+        //blowUp(toBlowUp);
+        //setTimeout(cleanUp(toBlowUp), 1000);
+        //document.getElementById((begX-1) + "-" + (begY+2)).innerHTML = '<img src="img/boom.png"></img>'; //top right
+        //document.getElementById((begX-1) + "-" + (begY+1)).innerHTML = '<img src="img/boom.png"></img>'; //top middle
+        //document.getElementById((begX-1) + "-" + (begY)).innerHTML = '<img src="img/boom.png"></img>'; //top left
+        //document.getElementById((begX) + "-" + (begY+2)).innerHTML = '<img src="img/boom.png"></img>'; //middle right
+        //document.getElementById((begX+1) + "-" + (begY+2)).innerHTML = '<img src="img/boom.png"></img>'; //bottom right
+        //document.getElementById((begX+1) + "-" + (begY+1)).innerHTML = '<img src="img/boom.png"></img>'; //bottom middle
+        //document.getElementById((begX+1) + "-" + (begY)).innerHTML = '<img src="img/boom.png"></img>'; //bottom left
+        //document.getElementById((begX) + "-" + (begY+1)).innerHTML = '<img src="img/boom.png"></img>'; //the dynamite itself
+        //setTimeout(makePathLeft, 300);
         
     }
      /*    O O
@@ -709,24 +773,112 @@ function explode(){
     }
     
     /*     OOO
-     *      BO 
+     *     OB  
      *     OOO
      */
+
+     //right
     else if(newArr[begX][begY-1] === "T"){
-        var boomImg = document.createElement("img");
-        newArr[begX][begY-1].src = "img/boom.png"; //top left
+        //'<img src="source.png"></img>'
+        update("BOOM!");
+        document.getElementById((begX-1) + "-" + (begY-2)).innerHTML = '<img src="img/boom.png"></img>'; //top left
+        document.getElementById((begX-1) + "-" + (begY-1)).innerHTML = '<img src="img/boom.png"></img>'; //top middle
+        document.getElementById((begX-1) + "-" + (begY)).innerHTML = '<img src="img/boom.png"></img>'; //top right
+        document.getElementById((begX) + "-" + (begY-2)).innerHTML = '<img src="img/boom.png"></img>'; //middle left
+        document.getElementById((begX+1) + "-" + (begY)).innerHTML = '<img src="img/boom.png"></img>'; //bottom right
+        document.getElementById((begX+1) + "-" + (begY-1)).innerHTML = '<img src="img/boom.png"></img>'; //bottom middle
+        document.getElementById((begX+1) + "-" + (begY-2)).innerHTML = '<img src="img/boom.png"></img>'; //bottom left
+        document.getElementById((begX) + "-" + (begY-1)).innerHTML = '<img src="img/boom.png"></img>'; //the dynamite itself
+        //document.getElementById("4-2").appendChild(boom1);
+        setTimeout(makePathRight, 300);
+    }
+    
+    //bottom
+    /*    OOO
+     *    OBO 
+     *    O O
+     */
+    else if(newArr[begX-1][begY] === "T"){
         
-        boomImg.src = "img/boom.png";
-        document.getElementById((begX-1) + "-" + (begY-2)).appendChild(boomImg);
-        newArr[begX-1][begY-1].src = "img/boom.png"; //top middle
-        newArr[begX-1][begY-2].src = "img/boom.png";//top right
-        newArr[begX][begY-2].src = "img/boom.png";//mid right
-        newArr[begX+1][begY].src = "img/boom.png"; //bottom left
-        newArr[begX+1][begY-1].src = "img/boom.png"; //bottom middle
-        newArr[begX+1][begY-2].src = "img/boom.png";  //bottom right
     }
-    else if(newArr[begX][begY+1] === "T"){
-        //right
+    
+}
+//timeout function to make clear path after dynamite
+//var removeKeyText = "#" + newLocation + " > img";
+
+function makePathRight(){
+    
+    $("#" + (begX-1) + "-" + (begY-2) + " > img").remove(); 
+    newArr[begX-1][begY-2] = "P";
+    $("#" + (begX-1) + "-" + (begY-1) + " > img").remove(); 
+    newArr[begX-1][begY-1] = "P";
+    $("#" + (begX-1) + "-" + (begY) + " > img").remove(); 
+    newArr[begX-1][begY] = "P";
+    $("#" + (begX) + "-" + (begY-2) + " > img").remove(); 
+    newArr[begX][begY-2] = "P";
+    $("#" + (begX+1) + "-" + (begY) + " > img").remove();
+    newArr[begX+1][begY] = "P";
+    $("#" + (begX+1) + "-" + (begY-1) + " > img").remove(); 
+    newArr[begX+1][begY-1] = "P";
+    $("#" + (begX+1) + "-" + (begY-2) + " > img").remove(); 
+    newArr[begX+1][begY-2] = "P";
+    $("#" + (begX) + "-" + (begY-1) + " > img").remove(); 
+    newArr[begX][begY-1] = "P";//it is now a path. 
+    
+}
+//blowing up dynamite from the right
+function makePathLeft(){
+    $("#" + (begX-1) + "-" + (begY+2) + " > img").remove(); 
+    newArr[begX-1][begY-2] = "P";
+    $("#" + (begX-1) + "-" + (begY+1) + " > img").remove(); 
+    newArr[begX-1][begY-1] = "P";
+    $("#" + (begX-1) + "-" + (begY) + " > img").remove(); 
+    newArr[begX-1][begY] = "P";
+    $("#" + (begX) + "-" + (begY+2) + " > img").remove(); 
+    newArr[begX][begY-2] = "P";
+    $("#" + (begX+1) + "-" + (begY+2) + " > img").remove();
+    newArr[begX+1][begY] = "P";
+    $("#" + (begX+1) + "-" + (begY+1) + " > img").remove();
+    newArr[begX+1][begY-1] = "P";
+    $("#" + (begX+1) + "-" + (begY) + " > img").remove(); 
+    newArr[begX+1][begY-2] = "P";
+    $("#" + (begX) + "-" + (begY+1) + " > img").remove(); 
+    newArr[begX][begY-1] = "P";//it is now a path. 
+    
+}
+
+function blowUp(arr){
+    //alert(arr);
+    for(var count = 0; count < arr.length; count++){
+       
+        document.getElementById(arr[count]).innerHTML = '<img src="img/boom.png"></img>';
+        clean(arr[count]);
+    
+    
+        //alert("blowing up" + " " + arr[count]);
     }
+    //alert("at blowup call: " + count);
+    
+
+    //document.getElementById((begX-1) + "-" + (begY+2)).innerHTML = '<img src="img/boom.png"></img>'; //top right
+}
+
+function clean(ele){
+   //alert(ele);
+   setTimeout(function(){
+       $("#" + ele + " > img").remove();
+    newArr[parseInt(ele[0])][parseInt(ele[2])] = "P";
+   }, 300);
+    toBlowUp = [];
+}
+
+function cleanUp(arr){
+    
+    for(var count2 = 0; count2 < arr.length; count2++){
+        
+        $("#" + arr[count2] + " > img").remove(); 
+    newArr[parseInt(arr[count2][0])][parseInt(arr[count2][2])] = "P";
+    }
+    toBlowUp = [];
     
 }
