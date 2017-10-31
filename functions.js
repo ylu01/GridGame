@@ -6,18 +6,20 @@
 
 
 //each level will be a string of 100 characters, in an array. 
-var level = "WWPTWWWWWWWKPWPPtPCWWWPWEPWWTWCWKWPPWCWCPSPKttTPWPPWWWPPPPWPPCPWWWWWWPPKPPPTPPPPCWWPWWWWWWWOPPPPPPKW";
+var level = "WWPTWWWWWWWKPWPPtPPWWWPWEPWWTWCWKWPPWCWCPSPKttTPWPPWWWPPPPWPPCPWWWWWWPPKPPPTPPPPCWWPWWWWWWWOPPPPPPKW";
 //the list of system messages to display
 //test level
 //WWWWWWWWWWWPPPPPPPPWWSPPPPPPPWWPPPPPPPPWWWWKKPPPPWWPPPPPPPPWWPPPPPPPPWWCCPPPPPPWWPPPEPPPPWWWWWWWWWWW
 //OOWWWWWWWWWPPPPPPPCWWWPPEPPPWWOPKPPCPPWWPSPKPPPCCCPPPPPPWWWPPCPWWWWWPPPKPPPKPPPPPWWPWPPWWPWWWWWWWWW
+
+//displaying the right messages when something happens. 
 var messages = ["Opened a chest, got some treasure. ",  //0
                 "The chest is locked.",  //1
                 "You found a key. ", //2
                 "The chest is empty. ", //3
                 "You have not found all treasure yet.",//4
-                "You haven't collected all the treasure yet.",//5
-                "You did not collect all the treasure yet.", //6
+                "You have nothing to light it with.",//5
+                "BOOOM", //6
                 "You found a torch."]; //7
 
 
@@ -362,6 +364,9 @@ function checkKey(e) {
          begX++;
      
        }
+       else if(newArr[begX+1][begY] === "T"){
+           explode();
+       }
        
        
        else if(newArr[begX+1][begY] === "C"){
@@ -687,7 +692,7 @@ function explode(){
      *  O O O
      * 
      */
-    alert("begX is: " + (begX-1) + " BegY is: " + begY);
+    
     if(newArr[begX][begY+1] === "T"){
         
        update("BOOM!");
@@ -745,9 +750,7 @@ function explode(){
             
         }
         toBlowUp.push(begX + "-" + (begY+1));
-        alert(toBlowUp);
-
-    blowUp(toBlowUp);
+        blowUp(toBlowUp);
 
 
 
@@ -768,14 +771,68 @@ function explode(){
      *     OBO 
      *     OOO
      */
+    //down
     else if(newArr[begX+1][begY] === "T"){
-        //down
-    }
-    
-    /*     OOO
-     *     OB  
-     *     OOO
-     */
+        //top left
+        if(begX < 9 && begX >= 0 && begY -1< 9 && begY-1 >= 0 ){
+            if(newArr[begX][begY-1] !== "C" && newArr[begX][begY-1] !== "t" && newArr[begX][begY-1] !== "K" && newArr[begX][begY-1] !== "E"){
+                toBlowUp.push((begX + "-" + (begY-1)));
+            }
+        }
+        //top right
+        if(begX <= 9 && begX >= 0 && begY +1 <= 9 && begY +1 >= 0 ){
+            alert("??-----");
+            if(newArr[begX][begY+1] !== "C" && newArr[begX][begY+1] !== "t" && newArr[begX][begY+1] !== "K" && newArr[begX][begY+1] !== "E"){
+                alert("should exlode");
+                toBlowUp.push((begX + "-" + (begY+1)));
+            }
+            
+        }
+        //middle left
+        if(begX+1 < 9 && begX+1 > 0 && begY-1<= 9 && begY-1 > 0 ){
+            if(newArr[begX+1][begY-1] !== "C" && newArr[begX+1][begY-1] !== "t" && newArr[begX+1][begY-1] !== "K" && newArr[begX+1][begY-1] !== "E"){
+                toBlowUp.push((begX+1 + "-" + (begY-1)));
+            }
+            
+        }
+        //middle middle
+        if(begX+1 < 9 && begX+1 >= 0 && begY< 9 && begY > 0 ){
+            if(newArr[begX+1][begY] !== "C" && newArr[begX+1][begY] !== "t" && newArr[begX+1][begY] !== "K" && newArr[begX+1][begY] !== "E"){
+                toBlowUp.push((begX+1 + "-" + (begY)));
+            }
+            
+        }
+        //middle right
+        if(begX+1 < 9 && begX+1 >= 0 && begY+1<= 9 && begY+1 >= 0 ){
+            if(newArr[begX+1][begY+1] !== "C" && newArr[begX+1][begY+1] !== "t" && newArr[begX+1][begY+1] !== "K" && newArr[begX+1][begY+1] !== "E"){
+                toBlowUp.push((begX+1 + "-" + (begY+1)));
+            }
+            
+        }
+        //bottom left
+        if(begX+2 < 9 && begX+2 > 0 && begY-1< 9 && begY-1 > 0 ){
+            if(newArr[begX+2][begY-1] !== "C" && newArr[begX+2][begY-1] !== "t" && newArr[begX+2][begY-1] !== "K" && newArr[begX+2][begY-1] !== "E"){
+                toBlowUp.push((begX+2 + "-" + (begY-1)));
+            }
+            
+        }
+        //bottom middle
+        if(begX+2 < 9 && begX+2 > 0 && begY< 9 && begY > 0 ){
+            if(newArr[begX+2][begY] !== "C" && newArr[begX+2][begY] !== "t" && newArr[begX+2][begY] !== "K" && newArr[begX+2][begY] !== "E"){
+                
+                toBlowUp.push((begX+2 + "-" + (begY)));
+            }
+            
+        }
+        //bottom rifht
+        if(begX+2 < 9 && begX+2 > 0 && begY+2< 9 && begY+2 > 0 ){
+            if(newArr[begX+2][begY+1] !== "C" && newArr[begX+2][begY+1] !== "t" && newArr[begX+2][begY+1] !== "K" && newArr[begX+2][begY+1] !== "E"){
+                toBlowUp.push((begX+2 + "-" + (begY+1)));
+            }
+            
+        }
+        blowUp(toBlowUp);
+        }
 
      //right
     else if(newArr[begX][begY-1] === "T"){
