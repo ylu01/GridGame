@@ -18,12 +18,16 @@ the Number of C's must equal the number of K's. E is only accessible once all th
 
 # How to play
 
-Simply navigate with Left, Right, Up and Down arrow keys. 
+Simply navigate with Left, Right, Up and Down arrow keys. To use things such as chests or dynamites, press the arrow key towards that direction again. 
 
 # Future Improvements
 
 Looking to add a dynomite functionality, as well as a dark level, where only the squares around you is visible, and the other squares have a layer of black on top. 
 
-A Dynamite blows up squares around it. Still debating whether the player would take damage, or add in a damage system. 
+As of Nov.2.2017, Dynamite functionality has been added. 
 
 Auto maze generation is something remotely far from considering, maybe one day such a topic would be understood and implemented. 
+
+Weighted plate switches, and weight items can also be considered. 
+
+
