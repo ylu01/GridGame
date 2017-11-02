@@ -518,7 +518,7 @@ function checkKey(e) {
             addTorch();
           }
           else if(newArr[begX][begY+1] === "T"){
-              alert("???");
+              explode();
           }
        else{
          document.getElementById(newLocation).appendChild(newImg);
@@ -695,77 +695,67 @@ function explode(){
     
     if(newArr[begX][begY+1] === "T"){
         
-       update("BOOM!");
-        if(begX-1 < 9 && begX-1 > 0 && begY< 9 && begY > 0 ){
-            if(newArr[begX-1][begY+2] !== "C" && newArr[begX-1][begY+2] !== "t" && newArr[begX-1][begY+2] !== "K" && newArr[begX-1][begY+2] !== "E"){
-                toBlowUp.push((begX-1 + "-" + (begY+2)));
-            }
-            
-        }
-        if(begX-1 < 9 && begX-1 > 0 && begY< 9 && begY > 0 ){
-            if(newArr[begX-1][begY+1] !== "C" && newArr[begX-1][begY+1] !== "t" && newArr[begX-1][begY+1] !== "K" && newArr[begX-1][begY+1] !== "E"){
-                toBlowUp.push((begX-1 + "-" + (begY+1)));
-            }
-            
-        }
-        if(begX-1 < 9 && begX-1 > 0 && begY< 9 && begY > 0 ){
+        ///////////////top ones, with x-1
+        //top left
+        if(begX-1 <= 9 && begX-1 >= 0 && begY<= 9 && begY >= 0 ){
             if(newArr[begX-1][begY] !== "C" && newArr[begX-1][begY] !== "t" && newArr[begX-1][begY] !== "K" && newArr[begX-1][begY] !== "E"){
                 toBlowUp.push((begX-1 + "-" + (begY)));
             }
             
         }
-        if(begX < 9 && begX >= 0 && begY+2< 9 && begY+2 > 0 ){
-            if(newArr[begX][begY+2] !== "C" && newArr[begX][begY+2] !== "t" && newArr[begX][begY+2] !== "K" && newArr[begX][begY+2] !== "E"){
-                alert(begX + " " + (begY+2));
-                toBlowUp.push((begX + "-" + (begY+2)));
+        //top middle
+        if(begX-1 <= 9 && begX-1 >= 0 && begY+1<= 9 && begY+1 >= 0 ){
+            if(newArr[begX-1][begY+1] !== "C" && newArr[begX-1][begY+1] !== "t" && newArr[begX-1][begY+1] !== "K" && newArr[begX-1][begY+1] !== "E"){
+                toBlowUp.push((begX-1 + "-" + (begY+1)));
+            }
+            
+        }
+        //top right
+        if(begX-1 <= 9 && begX-1 >= 0 && begY+2 <= 9 && begY+2 >= 0 ){
+            if(newArr[begX-1][begY+2] !== "C" && newArr[begX-1][begY+2] !== "t" && newArr[begX-1][begY+2] !== "K" && newArr[begX-1][begY+2] !== "E"){
+                toBlowUp.push((begX-1 + "-" + (begY+2)));
             }
             
         }
         
-        if(begX+1 < 9 && begX+1 > 0 && begY+2< 9 && begY+2 > 0 ){
+        ////////////////middle ones, with x
+        //middle right
+        if(begX <= 9 && begX >= 0 && begY+2<= 9 && begY+2 >= 0 ){
+            if(newArr[begX][begY+2] !== "C" && newArr[begX][begY+2] !== "t" && newArr[begX][begY+2] !== "K" && newArr[begX][begY+2] !== "E"){
+                toBlowUp.push((begX + "-" + (begY+2)));
+            }
+            
+        }
+        //the dynamite itself, middle middle
+        if(begX <= 9 && begX >= 0 && begY+1<= 9 && begY+1 >= 0 ){
+            if(newArr[begX][begY+1] !== "C" && newArr[begX][begY+1] !== "t" && newArr[begX][begY+1] !== "K" && newArr[begX][begY+1] !== "E"){
+                toBlowUp.push((begX + "-" + (begY+1)));
+            }
+            
+        }
+        ////////////////bottom ones, with x+1
+        //bottom left
+        if(begX+1 <= 9 && begX+1 >= 0 && begY<= 9 && begY >= 0 ){
+            if(newArr[begX+1][begY] !== "C" && newArr[begX+1][begY] !== "t" && newArr[begX+1][begY] !== "K" && newArr[begX+1][begY] !== "E"){
+                toBlowUp.push((begX+1 + "-" + (begY)));
+            }
+            
+        }
+        //bottom middle
+        if(begX+1 <= 9 && begX+1 >= 0 && begY+1<= 9 && begY+1 >= 0 ){
+            if(newArr[begX+1][begY+1] !== "C" && newArr[begX+1][begY+1] !== "t" && newArr[begX+1][begY+1] !== "K" && newArr[begX+1][begY+1] !== "E"){
+                toBlowUp.push((begX+1 + "-" + (begY+1)));
+            }
+            
+        }
+        //bottom right
+        if(begX+1 <= 9 && begX+1 >= 0 && begY+2<= 9 && begY+2 >= 0 ){
             if(newArr[begX+1][begY+2] !== "C" && newArr[begX+1][begY+2] !== "t" && newArr[begX+1][begY+2] !== "K" && newArr[begX+1][begY+2] !== "E"){
                 toBlowUp.push((begX+1 + "-" + (begY+2)));
             }
             
         }
-        if(begX+1 < 9 && begX+1 > 0 && begY+1< 9 && begY+1 > 0 ){
-            if(newArr[begX+1][begY+1] !== "C" && newArr[begX+1][begY+1] !== "t" && newArr[begX+1][begY+1] !== "K" && newArr[begX+1][begY+1] !== "E"){
-                
-                toBlowUp.push((begX+1 + "-" + (begY+1)));
-            }
-            
-        }
-        if(begX+1 < 9 && begX+1 > 0 && begY< 9 && begY > 0 ){
-            if(newArr[begX+1][begY] !== "C" && newArr[begX+1][begY] !== "t" && newArr[begX+1][begY] !== "K" && newArr[begX+1][begY] !== "E"){
-                
-                toBlowUp.push((begX+1 + "-" + (begY)));
-            }
-            
-        }
-        if(begX < 9 && begX > 0 && begY+1< 9 && begY+1 > 0 ){
-            if(newArr[begX][begY+1] !== "C" && newArr[begX][begY+1] !== "t" && newArr[begX][begY+1] !== "K" && newArr[begX][begY+1] !== "E"){
-                alert("?");
-                toBlowUp.push((begX + "-" + (begY+1)));
-            }
-            
-        }
-        toBlowUp.push(begX + "-" + (begY+1));
         blowUp(toBlowUp);
-
-
-
-        //blowUp(toBlowUp);
-        //setTimeout(cleanUp(toBlowUp), 1000);
-        //document.getElementById((begX-1) + "-" + (begY+2)).innerHTML = '<img src="img/boom.png"></img>'; //top right
-        //document.getElementById((begX-1) + "-" + (begY+1)).innerHTML = '<img src="img/boom.png"></img>'; //top middle
-        //document.getElementById((begX-1) + "-" + (begY)).innerHTML = '<img src="img/boom.png"></img>'; //top left
-        //document.getElementById((begX) + "-" + (begY+2)).innerHTML = '<img src="img/boom.png"></img>'; //middle right
-        //document.getElementById((begX+1) + "-" + (begY+2)).innerHTML = '<img src="img/boom.png"></img>'; //bottom right
-        //document.getElementById((begX+1) + "-" + (begY+1)).innerHTML = '<img src="img/boom.png"></img>'; //bottom middle
-        //document.getElementById((begX+1) + "-" + (begY)).innerHTML = '<img src="img/boom.png"></img>'; //bottom left
-        //document.getElementById((begX) + "-" + (begY+1)).innerHTML = '<img src="img/boom.png"></img>'; //the dynamite itself
-        //setTimeout(makePathLeft, 300);
-        
     }
      /*    O O
      *     OBO 
@@ -774,58 +764,55 @@ function explode(){
     //down
     else if(newArr[begX+1][begY] === "T"){
         //top left
-        if(begX < 9 && begX >= 0 && begY -1< 9 && begY-1 >= 0 ){
+        if(begX <= 9 && begX >= 0 && begY -1<= 9 && begY-1 >= 0 ){
             if(newArr[begX][begY-1] !== "C" && newArr[begX][begY-1] !== "t" && newArr[begX][begY-1] !== "K" && newArr[begX][begY-1] !== "E"){
                 toBlowUp.push((begX + "-" + (begY-1)));
             }
         }
         //top right
         if(begX <= 9 && begX >= 0 && begY +1 <= 9 && begY +1 >= 0 ){
-            alert("??-----");
             if(newArr[begX][begY+1] !== "C" && newArr[begX][begY+1] !== "t" && newArr[begX][begY+1] !== "K" && newArr[begX][begY+1] !== "E"){
-                alert("should exlode");
                 toBlowUp.push((begX + "-" + (begY+1)));
             }
             
         }
         //middle left
-        if(begX+1 < 9 && begX+1 > 0 && begY-1<= 9 && begY-1 > 0 ){
+        if(begX+1 <= 9 && begX+1 >= 0 && begY-1<= 9 && begY-1 >= 0 ){
             if(newArr[begX+1][begY-1] !== "C" && newArr[begX+1][begY-1] !== "t" && newArr[begX+1][begY-1] !== "K" && newArr[begX+1][begY-1] !== "E"){
                 toBlowUp.push((begX+1 + "-" + (begY-1)));
             }
             
         }
         //middle middle
-        if(begX+1 < 9 && begX+1 >= 0 && begY< 9 && begY > 0 ){
+        if(begX+1 <= 9 && begX+1 >= 0 && begY<= 9 && begY >= 0 ){
             if(newArr[begX+1][begY] !== "C" && newArr[begX+1][begY] !== "t" && newArr[begX+1][begY] !== "K" && newArr[begX+1][begY] !== "E"){
                 toBlowUp.push((begX+1 + "-" + (begY)));
             }
             
         }
         //middle right
-        if(begX+1 < 9 && begX+1 >= 0 && begY+1<= 9 && begY+1 >= 0 ){
+        if(begX+1 <= 9 && begX+1 >= 0 && begY+1<= 9 && begY+1 >= 0 ){
             if(newArr[begX+1][begY+1] !== "C" && newArr[begX+1][begY+1] !== "t" && newArr[begX+1][begY+1] !== "K" && newArr[begX+1][begY+1] !== "E"){
                 toBlowUp.push((begX+1 + "-" + (begY+1)));
             }
             
         }
         //bottom left
-        if(begX+2 < 9 && begX+2 > 0 && begY-1< 9 && begY-1 > 0 ){
+        if(begX+2 <= 9 && begX+2 >= 0 && begY-1<= 9 && begY-1 >= 0 ){
             if(newArr[begX+2][begY-1] !== "C" && newArr[begX+2][begY-1] !== "t" && newArr[begX+2][begY-1] !== "K" && newArr[begX+2][begY-1] !== "E"){
                 toBlowUp.push((begX+2 + "-" + (begY-1)));
             }
             
         }
         //bottom middle
-        if(begX+2 < 9 && begX+2 > 0 && begY< 9 && begY > 0 ){
+        if(begX+2 <= 9 && begX+2 >= 0 && begY<= 9 && begY >= 0 ){
             if(newArr[begX+2][begY] !== "C" && newArr[begX+2][begY] !== "t" && newArr[begX+2][begY] !== "K" && newArr[begX+2][begY] !== "E"){
-                
                 toBlowUp.push((begX+2 + "-" + (begY)));
             }
             
         }
         //bottom rifht
-        if(begX+2 < 9 && begX+2 > 0 && begY+2< 9 && begY+2 > 0 ){
+        if(begX+2 <= 9 && begX+2 >= 0 && begY+2<= 9 && begY+2 >= 0 ){
             if(newArr[begX+2][begY+1] !== "C" && newArr[begX+2][begY+1] !== "t" && newArr[begX+2][begY+1] !== "K" && newArr[begX+2][begY+1] !== "E"){
                 toBlowUp.push((begX+2 + "-" + (begY+1)));
             }
@@ -833,21 +820,72 @@ function explode(){
         }
         blowUp(toBlowUp);
         }
-
+        
+        /*
+         * 
+         *  O O O
+         *  O B 
+         *  O O O
+         */
      //right
     else if(newArr[begX][begY-1] === "T"){
-        //'<img src="source.png"></img>'
-        update("BOOM!");
-        document.getElementById((begX-1) + "-" + (begY-2)).innerHTML = '<img src="img/boom.png"></img>'; //top left
-        document.getElementById((begX-1) + "-" + (begY-1)).innerHTML = '<img src="img/boom.png"></img>'; //top middle
-        document.getElementById((begX-1) + "-" + (begY)).innerHTML = '<img src="img/boom.png"></img>'; //top right
-        document.getElementById((begX) + "-" + (begY-2)).innerHTML = '<img src="img/boom.png"></img>'; //middle left
-        document.getElementById((begX+1) + "-" + (begY)).innerHTML = '<img src="img/boom.png"></img>'; //bottom right
-        document.getElementById((begX+1) + "-" + (begY-1)).innerHTML = '<img src="img/boom.png"></img>'; //bottom middle
-        document.getElementById((begX+1) + "-" + (begY-2)).innerHTML = '<img src="img/boom.png"></img>'; //bottom left
-        document.getElementById((begX) + "-" + (begY-1)).innerHTML = '<img src="img/boom.png"></img>'; //the dynamite itself
-        //document.getElementById("4-2").appendChild(boom1);
-        setTimeout(makePathRight, 300);
+        if(begX-1 <= 9 && begX-1 >= 0 && begY -1<= 9 && begY-1 >= 0 ){
+            if(newArr[begX-1][begY-2] !== "C" && newArr[begX-1][begY-2] !== "t" && newArr[begX-1][begY-2] !== "K" && newArr[begX-1][begY-2] !== "E"){
+                toBlowUp.push(((begX-1) + "-" + (begY-2)));
+            }
+        }
+        //top middle
+        if(begX-1 <= 9 && begX-1 >= 0 && begY -1 <= 9 && begY -1 >= 0 ){
+            if(newArr[begX-1][begY+1] !== "C" && newArr[begX-1][begY-1] !== "t" && newArr[begX-1][begY-1] !== "K" && newArr[begX-1][begY-1] !== "E"){
+                toBlowUp.push(((begX-1) + "-" + (begY-1)));
+            }
+            
+        }
+        //top right
+        if(begX <= 9 && begX >= 0 && begY-1<= 9 && begY-1 >= 0 ){
+            if(newArr[begX][begY-1] !== "C" && newArr[begX][begY-1] !== "t" && newArr[begX][begY-1] !== "K" && newArr[begX][begY-1] !== "E"){
+                toBlowUp.push((begX + "-" + (begY-1)));
+            }
+            
+        }
+        //middle left
+        if(begX <= 9 && begX >= 0 && begY-2<= 9 && begY-2 >= 0 ){
+            if(newArr[begX][begY-2] !== "C" && newArr[begX][begY-2] !== "t" && newArr[begX][begY-2] !== "K" && newArr[begX][begY-2] !== "E"){
+                toBlowUp.push((begX + "-" + (begY-2)));
+            }
+            
+        }
+        //bottom left
+        if(begX+1 <= 9 && begX+1 >= 0 && begY-2<= 9 && begY-2 >= 0 ){
+            if(newArr[begX+1][begY-2] !== "C" && newArr[begX+1][begY-2] !== "t" && newArr[begX+1][begY-2] !== "K" && newArr[begX+1][begY-2] !== "E"){
+                toBlowUp.push(((begX+1) + "-" + (begY-2)));
+            }
+            
+        }
+        //bottom middle
+        if(begX+1 <= 9 && begX+1 >= 0 && begY-1<= 9 && begY-1 >= 0 ){
+            if(newArr[begX+1][begY-1] !== "C" && newArr[begX+1][begY-1] !== "t" && newArr[begX+1][begY-1] !== "K" && newArr[begX+1][begY-1] !== "E"){
+                toBlowUp.push(((begX+1) + "-" + (begY-1)));
+            }
+            
+        }
+        //bottom right
+        if(begX+1 <= 9 && begX+1 >= 0 && begY<= 9 && begY >= 0 ){
+            if(newArr[begX+1][begY] !== "C" && newArr[begX+1][begY] !== "t" && newArr[begX+1][begY] !== "K" && newArr[begX+1][begY] !== "E"){
+                
+                toBlowUp.push(((begX+1) + "-" + (begY)));
+            }
+            
+        }
+        //dynamite itself
+        if(begX <= 9 && begX >= 0 && begY-1<= 9 && begY-1 >= 0 ){
+            if(newArr[begX][begY-1] !== "C" && newArr[begX][begY-1] !== "t" && newArr[begX][begY-1] !== "K" && newArr[begX][begY-1] !== "E"){
+                toBlowUp.push((begX + "-" + (begY-1)));
+            }
+            
+        }
+        blowUp(toBlowUp);
+        
     }
     
     //bottom
@@ -863,46 +901,7 @@ function explode(){
 //timeout function to make clear path after dynamite
 //var removeKeyText = "#" + newLocation + " > img";
 
-function makePathRight(){
-    
-    $("#" + (begX-1) + "-" + (begY-2) + " > img").remove(); 
-    newArr[begX-1][begY-2] = "P";
-    $("#" + (begX-1) + "-" + (begY-1) + " > img").remove(); 
-    newArr[begX-1][begY-1] = "P";
-    $("#" + (begX-1) + "-" + (begY) + " > img").remove(); 
-    newArr[begX-1][begY] = "P";
-    $("#" + (begX) + "-" + (begY-2) + " > img").remove(); 
-    newArr[begX][begY-2] = "P";
-    $("#" + (begX+1) + "-" + (begY) + " > img").remove();
-    newArr[begX+1][begY] = "P";
-    $("#" + (begX+1) + "-" + (begY-1) + " > img").remove(); 
-    newArr[begX+1][begY-1] = "P";
-    $("#" + (begX+1) + "-" + (begY-2) + " > img").remove(); 
-    newArr[begX+1][begY-2] = "P";
-    $("#" + (begX) + "-" + (begY-1) + " > img").remove(); 
-    newArr[begX][begY-1] = "P";//it is now a path. 
-    
-}
-//blowing up dynamite from the right
-function makePathLeft(){
-    $("#" + (begX-1) + "-" + (begY+2) + " > img").remove(); 
-    newArr[begX-1][begY-2] = "P";
-    $("#" + (begX-1) + "-" + (begY+1) + " > img").remove(); 
-    newArr[begX-1][begY-1] = "P";
-    $("#" + (begX-1) + "-" + (begY) + " > img").remove(); 
-    newArr[begX-1][begY] = "P";
-    $("#" + (begX) + "-" + (begY+2) + " > img").remove(); 
-    newArr[begX][begY-2] = "P";
-    $("#" + (begX+1) + "-" + (begY+2) + " > img").remove();
-    newArr[begX+1][begY] = "P";
-    $("#" + (begX+1) + "-" + (begY+1) + " > img").remove();
-    newArr[begX+1][begY-1] = "P";
-    $("#" + (begX+1) + "-" + (begY) + " > img").remove(); 
-    newArr[begX+1][begY-2] = "P";
-    $("#" + (begX) + "-" + (begY+1) + " > img").remove(); 
-    newArr[begX][begY-1] = "P";//it is now a path. 
-    
-}
+
 
 function blowUp(arr){
     //alert(arr);
