@@ -6,7 +6,7 @@
 
 
 //each level will be a string of 100 characters, in an array. 
-var level = "WWPTWWWWWWWKPWPPtPPWWWPWEPWWTWCWKWPPWCWCPSPKttTPWPPWWWPPPPWPPCPWWWWWWPPKPPPTPPPPCWWPWWWWWWWOPPPPPPKW";
+var level = "WWPTWWWWWWWKPWPPtPPWWWPWEPWWTWCWKTPPPCWCPSPKttTPWPPWWWPPPPWPPCPWWWWWWPPKPPPTPPPPCWWPWWWWWWWOPPPPPPKW";
 //the list of system messages to display
 //test level
 //WWWWWWWWWWWPPPPPPPPWWSPPPPPPPWWPPPPPPPPWWWWKKPPPPWWPPPPPPPPWWPPPPPPPPWWCCPPPPPPWWPPPEPPPPWWWWWWWWWWW
@@ -252,9 +252,7 @@ function checkKey(e) {
 
     e = e || window.event;
     if (e.keyCode === 38) {
-        // up arrow
-      //x-1
-      
+        
           //alert(newArr[begX-1][begY]);
       //document.getElementById("test").innerHTML = "up";
       var tempText = begX + "-" + begY;
@@ -288,6 +286,7 @@ function checkKey(e) {
           addTorch();
           curTorches++; //update torches
           }
+          
           else{
              document.getElementById(newLocation).appendChild(newImg);
           }
@@ -315,6 +314,10 @@ function checkKey(e) {
                update(messages[1]);
            }
          
+       }
+       else if(newArr[begX-1][begY] === "T"){
+              alert("?a?a?");
+           explode();
        }
      }
        //console.log("X: " + begX + " y: " + begY);
@@ -365,6 +368,7 @@ function checkKey(e) {
      
        }
        else if(newArr[begX+1][begY] === "T"){
+           alert("??????????????????");
            explode();
        }
        
@@ -829,7 +833,8 @@ function explode(){
          */
      //right
     else if(newArr[begX][begY-1] === "T"){
-        if(begX-1 <= 9 && begX-1 >= 0 && begY -1<= 9 && begY-1 >= 0 ){
+        //top left
+        if(begX-1 <= 9 && begX-1 >= 0 && begY -2<= 9 && begY-2 >= 0 ){
             if(newArr[begX-1][begY-2] !== "C" && newArr[begX-1][begY-2] !== "t" && newArr[begX-1][begY-2] !== "K" && newArr[begX-1][begY-2] !== "E"){
                 toBlowUp.push(((begX-1) + "-" + (begY-2)));
             }
@@ -842,9 +847,9 @@ function explode(){
             
         }
         //top right
-        if(begX <= 9 && begX >= 0 && begY-1<= 9 && begY-1 >= 0 ){
-            if(newArr[begX][begY-1] !== "C" && newArr[begX][begY-1] !== "t" && newArr[begX][begY-1] !== "K" && newArr[begX][begY-1] !== "E"){
-                toBlowUp.push((begX + "-" + (begY-1)));
+        if(begX-1 <= 9 && begX-1 >= 0 && begY<= 9 && begY >= 0 ){
+            if(newArr[begX-1][begY] !== "C" && newArr[begX-1][begY] !== "t" && newArr[begX-1][begY] !== "K" && newArr[begX-1][begY] !== "E"){
+                toBlowUp.push(((begX-1) + "-" + (begY)));
             }
             
         }
@@ -888,13 +893,63 @@ function explode(){
         
     }
     
-    //bottom
+    //from the bottom
     /*    OOO
      *    OBO 
      *    O O
      */
+    
     else if(newArr[begX-1][begY] === "T"){
+         if(begX-2 <= 9 && begX-2 >= 0 && begY -1<= 9 && begY-1 >= 0 ){
+            if(newArr[begX-2][begY-1] !== "C" && newArr[begX-2][begY-1] !== "t" && newArr[begX-2][begY-1] !== "K" && newArr[begX-2][begY-1] !== "E"){
+                toBlowUp.push(((begX-2) + "-" + (begY-1)));
+            }
+        }
+        //top middle
+        if(begX-2 <= 9 && begX-2 >= 0 && begY <= 9 && begY >= 0 ){
+            if(newArr[begX-2][begY] !== "C" && newArr[begX-2][begY] !== "t" && newArr[begX-2][begY] !== "K" && newArr[begX-2][begY] !== "E"){
+                toBlowUp.push(((begX-2) + "-" + (begY)));
+            }
+        }
+        //top right
+        if(begX-1<= 9 && begX-1 >= 0 && begY -1<= 9 && begY-1 >= 0 ){
+            if(newArr[begX-1][begY-1] !== "C" && newArr[begX-1][begY-1] !== "t" && newArr[begX-1][begY-1] !== "K" && newArr[begX-1][begY-1] !== "E"){
+                toBlowUp.push(((begX-1) + "-" + (begY-1)));
+            }
+        }
+        //middle left
+        if(begX-1<= 9 && begX-1 >= 0 && begY -1<= 9 && begY-1 >= 0 ){
+            if(newArr[begX-1][begY-1] !== "C" && newArr[begX-1][begY-1] !== "t" && newArr[begX-1][begY-1] !== "K" && newArr[begX-1][begY-1] !== "E"){
+                toBlowUp.push(((begX-1) + "-" + (begY-1)));
+            }
+        }
         
+        //middle right
+        if(begX <= 9 && begX >= 0 && begY +1<= 9 && begY+1 >= 0 ){
+            if(newArr[begX-1][begY+1] !== "C" && newArr[begX-1][begY+1] !== "t" && newArr[begX-1][begY+1] !== "K" && newArr[begX-1][begY+1] !== "E"){
+                toBlowUp.push(((begX-1) + "-" + (begY+1)));
+            }
+        }
+        //bottom left
+        if(begX<= 9 && begX >= 0 && begY -1<= 9 && begY-1 >= 0 ){
+            if(newArr[begX][begY-1] !== "C" && newArr[begX][begY-1] !== "t" && newArr[begX][begY-1] !== "K" && newArr[begX][begY-1] !== "E"){
+                toBlowUp.push(((begX) + "-" + (begY-1)));
+            }
+        }
+        
+        //bottom right
+        if(begX <= 9 && begX >= 0 && begY +1<= 9 && begY+1 >= 0 ){
+            if(newArr[begX][begY+1] !== "C" && newArr[begX][begY+1] !== "t" && newArr[begX][begY+1] !== "K" && newArr[begX][begY+1] !== "E"){
+                toBlowUp.push(((begX) + "-" + (begY+1)));
+            }
+        }
+        //the dynamite itself
+         if(begX-1 <= 9 && begX-1 >= 0 && begY<= 9 && begY >= 0 ){
+            if(newArr[begX-1][begY] !== "C" && newArr[begX-1][begY] !== "t" && newArr[begX-1][begY] !== "K" && newArr[begX-1][begY] !== "E"){
+                toBlowUp.push(((begX-1) + "-" + (begY)));
+            }
+        }
+        blowUp(toBlowUp);
     }
     
 }
