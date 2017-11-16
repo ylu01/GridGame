@@ -113,10 +113,10 @@ img{
   font-family:Comic Sans MS;
   
 }
-#g1, #g2{
+#g1, #g2, #g3{
     font-family: "Arial", cursive, sans-serif;
     font-size:150%;
-    left:-25px;
+    padding-left:5px;
 }
 .gridPic{
     width:50px;
