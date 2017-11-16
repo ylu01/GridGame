@@ -90,7 +90,6 @@ function setBoard(sch){
   document.getElementById("inventoryText").innerHTML = "I N V E N T O R Y";
   
   //make the inventory grid
-  
   setInventory();
   
   
@@ -189,27 +188,24 @@ function addToGrid(x,y,id){
     newGrid.appendChild(newImg);
     board.appendChild(newGrid);
   }
-  //document.getElementById(curId).innerHTML = curId;
-  
 }
-//alert(level);
 checkLevel(newArr);
 setBoard(newArr);//lert(inventoryList.length); 
 
 var characterPic = 'img/char1.jpg';
-//document.onkeydown = checkKey;
- //console.log("STARTUP: X:" + begX + " Y:" + begY);
-
-
-
-//here handles the key pressed stuff. 
 document.onkeydown = checkKey;
-
-//function to validate the level string. 
+//function to validate the level string, for debugging and custom level purposes. 
+/*-****************************************************************************\
+ *  -  Keys must equal the number oc ehests in level.                          |
+ *  -  Torches must equal number of dynamites.                                 |
+ *  -  There can only be one exit block.                                       |
+ *  -  There can only be one character, and S block.                           | 
+ \******************************************************************************/
 function checkLevel(levelStr){
 var nKeys =0;
 var nChests =0;
 var nExit = 0;
+
 var nStart = 0;
 for(var countK = 0; countK < levelStr.length; countK++){
     for(var countK1 = 0; countK1 < levelStr[countK].length; countK1++){
@@ -306,6 +302,7 @@ function checkKey(e) {
                update(messages[0]);
                curKeys--;
                takeKey();
+               addTreasure();
                //chest is now empty. 
                newArr[begX-1][begY] = "O";
                
@@ -316,8 +313,14 @@ function checkKey(e) {
          
        }
        else if(newArr[begX-1][begY] === "T"){
-              alert("?a?a?");
-           explode();
+           if(curTorches > 0){
+               explode();
+               curTorches--;
+               takeTorch();
+           }
+           else{
+               update(messages[5]);
+           }
        }
      }
        //console.log("X: " + begX + " y: " + begY);
@@ -368,8 +371,14 @@ function checkKey(e) {
      
        }
        else if(newArr[begX+1][begY] === "T"){
-           alert("??????????????????");
-           explode();
+           if(curTorches > 0){
+               explode();
+               curTorches--;
+               takeTorch();
+           }
+           else{
+               update(messages[5]);
+           }
        }
        
        
@@ -385,6 +394,7 @@ function checkKey(e) {
                update(messages[0]);
                curKeys--;
                takeKey();
+               addTreasure();
                //chest is now empty. 
                newArr[begX+1][begY] = "O";
                
@@ -450,8 +460,14 @@ function checkKey(e) {
       begY--;
        }
        else if(newArr[begX][begY-1] === "T"){
-           //alert("explode left");
-           explode();
+           if(curTorches > 0){
+               explode();
+               curTorches--;
+               takeTorch();
+           }
+           else{
+               update(messages[5]);
+           }
        }
        else if(newArr[begX][begY-1] === "C"){
            if(curKeys > 0){
@@ -465,6 +481,7 @@ function checkKey(e) {
                update(messages[0]);
                curKeys--;
                takeKey();
+               addTreasure();
                //chest is now empty. 
                newArr[begX][begY-1] = "O";
                
@@ -521,9 +538,6 @@ function checkKey(e) {
             curTorches++;
             addTorch();
           }
-          else if(newArr[begX][begY+1] === "T"){
-              explode();
-          }
        else{
          document.getElementById(newLocation).appendChild(newImg);
        }
@@ -532,7 +546,14 @@ function checkKey(e) {
        }
        
        else if(newArr[begX][begY+1] === "T"){
-           explode();
+           if(curTorches > 0){
+               explode();
+               curTorches--;
+               takeTorch();
+           }
+           else{
+               update(messages[5]);
+           }
        }
        
        else if(newArr[begX][begY+1] === "C"){
@@ -545,10 +566,11 @@ function checkKey(e) {
                newImg.src ="img/openChest.jpg";
                remaining--;
                
-                    document.getElementById(newLocation1).appendChild(newImg);
+               document.getElementById(newLocation1).appendChild(newImg);
                update(messages[0]);
                curKeys--;
                takeKey();
+               addTreasure();
                //chest is now empty. 
                newArr[begX][begY+1] = "O";
                
@@ -578,10 +600,18 @@ function setInventory(){
     torchSlot.setAttribute("class", "iGrid");
     inventory.appendChild(torchSlot);
 	
+    var treasureSlot = document.createElement("div");
+    treasureSlot.setAttribute("id", "i3");
+    treasureSlot.setAttribute("class", "iGrid");
+    inventory.appendChild(treasureSlot);
     var innerGrid = document.createElement("div");
     innerGrid.setAttribute("class", "gridPic");
     keySlot.appendChild(innerGrid);
 	
+    var treasureGrid = document.createElement("div");
+    treasureGrid.setAttribute("class", "gridPic");
+    treasureSlot.appendChild(treasureGrid);
+    
     var innerGrid1 = document.createElement("div");
     innerGrid1.setAttribute("class", "gridPic");
     torchSlot.appendChild(innerGrid1);
@@ -595,6 +625,8 @@ function setInventory(){
     keySlot.appendChild(content);
     document.getElementById("g1").innerHTML = "x0"; //have 0 to begin with. 
 	
+     //add second element, dynamite. 
+    
     //add second element, dynamite. 
     var newImg1 = document.createElement("img");
     newImg1.src =  'img/torch.png';
@@ -603,6 +635,14 @@ function setInventory(){
     content1.setAttribute("id", "g2");
     torchSlot.appendChild(content1);
     document.getElementById("g2").innerHTML = "x0"; //have 0 to begin with. 
+    
+    var treasureImg = document.createElement("img");
+    treasureImg.src =  'img/treasure.png';
+    treasureGrid.appendChild(treasureImg);
+    var treasureContent = document.createElement("p");
+    treasureContent.setAttribute("id", "g3");
+    treasureSlot.appendChild(treasureContent);
+    document.getElementById("g3").innerHTML = "x0"; //have 0 to begin with. 
 
 }
 function setInventoryObj(num){
@@ -651,6 +691,14 @@ function takeTorch(){
     temp = parseInt(temp);
     temp--;
     document.getElementById("g2").innerHTML = "x" + temp;
+}
+
+function addTreasure(){
+    var temp = document.getElementById("g3").innerHTML.split("x");
+    temp.shift();
+    temp = parseInt(temp);
+    temp++;
+    document.getElementById("g3").innerHTML = "x" + temp;
 }
 function addItem(itemChar){
   if(invCount > 9){
