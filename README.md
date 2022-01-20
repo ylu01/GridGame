@@ -5,6 +5,11 @@
 yarn install
 ```
 
+## Build Solution
+
+yarn run build
+```
+
 ### To Run
 ```
 yarn run serve
