@@ -1,15 +1,23 @@
 <template>
     <div id="app">
-        <img alt="Vue logo" src="./assets/logo.png" />
+        <img alt="Vue logo" src="/assets/logo.png" />
         <div id="game-board" class="board"></div>
     </div>
 </template>
 
 <script>
-    import labels from './assets/assets.json';
+    import labels from '/assets/assets.json';
     import $ from 'jquery';
     export default {
         name: 'App',
+        data(){
+           return {
+               dataModel: {
+                   x:0,
+                   y:0
+               },
+           }
+        },
         methods: {
             makeBoard: function() {
                 const levelStr = labels.level['originalLevel'];
@@ -34,46 +42,33 @@
                 newGrid.setAttribute('class', 'grid');
                 newGrid.setAttribute('id', curId);
                 var newImg = document.createElement('img');
-                if (newArr[x][y] === 'W') {
-                    let image = require('./assets/wall.jpg');
-                    newImg.setAttribute('src', image);
-                    //newImg.src = './assets/wall.jpg';
-                } else if (newArr[x][y] === 'P') {
+                let fileName, image;
+                fileName = labels.images[newArr[x][y]];
+                //console.log("???? " + fileName);
+
+                
+                if (newArr[x][y] === 'P') {
                     newGrid.style.backgroundColor = 'gray';
-                } else if (newArr[x][y] === 'S') {
-                    //begX = x;
-                    //begY = y;
-                    let image = require('./assets/char1.jpg');
-                    newImg.setAttribute('src', image);
-                } else if (newArr[x][y] === 'C') {
-                    let image = require('./assets/chest.jpg');
-                    newImg.setAttribute('src', image);
-                } else if (newArr[x][y] === 'E') {
-                    let image = require('./assets/door.jpg');
-                    newImg.setAttribute('src', image);
-                } else if (newArr[x][y] === 'O') {
-                    let image = require('./assets/openChest.jpg');
-                    newImg.setAttribute('src', image);
-                } else if (newArr[x][y] === 'K') {
-                    let image = require('./assets/wall.jpg');
-                    newImg.setAttribute('src', image);
-                } else if (newArr[x][y] === 'T') {
-                    let image = require('./assets/tnt.png');
-                    newImg.setAttribute('src', image);
-                } else if (newArr[x][y] === 't') {
-                    let image = require('./assets/torch.png');
-                    newImg.setAttribute('src', image);
-                } else {
-                    let image = require('./assets/wall.jpg');
+                }
+                else if (newArr[x][y] === 'S') {
+                    this.dataModel.currentX = x;
+                    this.dataModel.currentY = y;//labels.images['S']
+                }
+                else{
+                    image = require(`/${fileName}`);
                     newImg.setAttribute('src', image);
                 }
+                
                 newGrid.append(newImg);
                 board.append(newGrid);
             },
         },
-        created() {},
+        created() {
+            this.dataModel.levelStr = labels.level['originalLevel'].split('');
+        },
         mounted() {
             this.makeBoard();
+            console.log(this.dataModel);
         },
     };
 </script>
