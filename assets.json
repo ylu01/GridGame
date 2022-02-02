@@ -1,0 +1,24 @@
+{
+    "level": {
+        "originalLevel": "WWPTWWWWWWWKPWPPtPPWWWPWEPWWTWCWKTPPPCWCPSPKttTPWPPWWWPPPPWPPCPWWWWWWPPKPPPTPPPPCWWPWWWWWWWOPPPPPPKW"
+    },
+    "messages": {
+        "message_opened": "Opened a chest, got some treasure. ",
+        "message_locked": "The chest is locked.",
+        "message_foundKey": "You found a key. ",
+        "message_chestEmpty": "The chest is empty. ",
+        "message_didntFindAll": "You have not found all treasure yet.",
+        "message_noLight": "You have nothing to light it with.",
+        "message_boom": "BOOOM",
+        "message_foundTorch": "You found a torch."
+    },
+    "images": {
+        "S": "/assets/char1.jpg",
+        "C": "/assets/chest.jpg",
+        "E": "/assets/door.jpg",
+        "O": "/assets/openChest.jpg",
+        "W": "/assets/wall.jpg",
+        "T": "/assets/tnt.png",
+        "t": "/assets/torch.png"
+    }
+}
